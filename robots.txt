@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://nowaxsky.github.io/vegoutter/sitemap/sitemap-index.xml
+Host: https://nowaxsky.github.io

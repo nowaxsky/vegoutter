@@ -1,4 +1,4 @@
-# Veggoutter
+# Vegoutter
 
 This is a repo to host Chuck's blog on GitHub.
 

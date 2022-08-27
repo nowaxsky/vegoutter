@@ -8,7 +8,7 @@ import type { UseMenuReturnType } from "./useMenu"
 
 const ROOT = "/"
 const EXTENRAL_LINK_EXP =
-  /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w-]*)?(\?[^\s]*)?/gi
+  /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w-]*)?(\?[^\s]*)?/i
 
 interface LinkListProps extends Pick<UseMenuReturnType, "setToggle"> {
   links: UseSiteMetaDataReturnType["menuLinks"]

@@ -6,50 +6,48 @@ import kebabCase from "lodash/kebabCase"
 
 import type { MarkdownRemarkGroupConnection } from "Types/GraphQL"
 import useScrollCenter from "./useScrollCenter"
-import { DOMAINS } from "Constants/domain"
 
 const ACTIVE = "active"
 
-interface CategoryFilterProps {
-  categoryList: MarkdownRemarkGroupConnection[],
-  categoryTitle: String
+interface TagFilterProps {
+  tagList: MarkdownRemarkGroupConnection[],
+  category: String
 }
 
 type LinkPropsGetter = GatsbyLinkProps<unknown>["getProps"]
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ categoryList, categoryTitle }) => {
-  const categoryRef = useRef<HTMLUListElement>(null)
-  const ALL_CATEGORY_NAME = "全部"
+const TagFilter: React.FC<TagFilterProps> = ({ tagList, category }) => {
+  const tagRef = useRef<HTMLUListElement>(null)
+  const ALL_TAG_NAME = "全部"
   const isActive: LinkPropsGetter = ({ isCurrent }) =>
     isCurrent ? { id: ACTIVE, tabIndex: -1 } : {}
 
-  useScrollCenter({ ref: categoryRef, targetId: ACTIVE })
+  useScrollCenter({ ref: tagRef, targetId: ACTIVE })
 
   return (
-    <Nav aria-label="Category Filter">
-      <CategoryTitle>{ categoryTitle }</CategoryTitle>
-      <CategoryButton getProps={isActive} to="/">
-        {ALL_CATEGORY_NAME}
-      </CategoryButton>
+    <Nav aria-label="Tag Filter">
+      <TagTitle>分類標籤</TagTitle>
+      <TagButton getProps={isActive} to={`/${category}/`}>
+        {ALL_TAG_NAME}
+      </TagButton>
       <Divider />
-      <CategoryUl ref={categoryRef} className="invisible-scrollbar">
-        {categoryList
+      <TagUl ref={tagRef} className="invisible-scrollbar">
+        {tagList
           .sort((a, b) => b.totalCount - a.totalCount)
-          .map(category => {
-            const { fieldValue } = category
-            const domainDescription = DOMAINS.find(domain => domain.name === fieldValue)?.description
+          .map(tag => {
+            const { fieldValue } = tag
             return (
               <li key={fieldValue}>
-                <CategoryButton
+                <TagButton
                   getProps={isActive}
-                  to={`/category/${kebabCase(fieldValue!)}/`}
+                  to={`/${category}/tag/${kebabCase(fieldValue!)}/`}
                 >
-                  {domainDescription}
-                </CategoryButton>
+                  {fieldValue}
+                </TagButton>
               </li>
             )
           })}
-      </CategoryUl>
+      </TagUl>
     </Nav>
   )
 }
@@ -72,7 +70,7 @@ const Nav = styled.nav`
   }
 `
 
-const CategoryTitle = styled.em`
+const TagTitle = styled.em`
   position: static;
   width: auto;
   height: auto;
@@ -95,10 +93,10 @@ const CategoryTitle = styled.em`
   }
 `
 
-const CategoryButton = styled(Link)`
+const TagButton = styled(Link)`
   cursor: pointer;
   display: block;
-  background-color: var(--color-category-button);
+  background-color: var(--color-tag-button);
   padding: var(--sizing-sm) var(--sizing-base);
   border-radius: var(--border-radius-base);
   font-size: 0.875rem;
@@ -127,7 +125,7 @@ const Divider = styled.div`
   background-color: var(--color-divider);
 `
 
-const CategoryUl = styled.ul`
+const TagUl = styled.ul`
   display: flex;
   list-style: none;
   overflow-x: scroll;
@@ -139,4 +137,4 @@ const CategoryUl = styled.ul`
   }
 `
 
-export default CategoryFilter
+export default TagFilter

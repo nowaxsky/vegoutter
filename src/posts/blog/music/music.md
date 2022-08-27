@@ -1,7 +1,7 @@
 ---
 title: "Music Test"
 category: "music"
-tags: ["test"]
+tags: ["Test"]
 date: "2019-12-01 12:00:00 +08:00"
 desc: "Markdown Syntax"
 thumbnail: "../../images/default.jpg"

@@ -3,12 +3,14 @@ import styled from "styled-components"
 
 import type Post from "Types/Post"
 import Category from "Styles/category"
+import Tag from "Styles/tag"
 import DateTime from "Styles/dateTime"
 import CenteredImg from "./centeredImg"
+import { DOMAINS } from "Constants/domain"
 
 type CardProps = Pick<
   Post,
-  "thumbnail" | "alt" | "category" | "title" | "desc" | "date"
+  "thumbnail" | "alt" | "category" | "title" | "desc" | "date" | "tags"
 >
 
 const Card: React.FC<CardProps> = ({
@@ -18,13 +20,17 @@ const Card: React.FC<CardProps> = ({
   title,
   desc,
   date,
+  tags,
 }) => {
+  const domainDescription = DOMAINS.find(domain => domain.name === category)?.description
+  const tagsDisplay = tags.map(tag => `#${tag}`).join(" ");
   return (
     <Wrapper>
       <CenteredImg src={thumbnail} alt={alt} />
       <Text>
         <div>
-          <Category>{category}</Category>
+          <Category>{domainDescription}</Category>
+          <Tag>{tagsDisplay}</Tag>
           <Title>{title}</Title>
           <Desc>{desc}</Desc>
         </div>

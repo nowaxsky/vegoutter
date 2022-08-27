@@ -19,6 +19,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const mainTemplate = path.resolve(`./src/pages/index.tsx`)
   const blogPostTemplate = path.resolve(`./src/templates/blogPost.tsx`)
+  const softwareTemplate = path.resolve(`./src/pages/software.tsx`)
+  const musicTemplate = path.resolve(`./src/pages/music.tsx`)
 
   const result = await graphql(`
     {
@@ -37,6 +39,24 @@ exports.createPages = async ({ graphql, actions }) => {
       }
       categoriesGroup: allMarkdownRemark(limit: 2000) {
         group(field: frontmatter___category) {
+          fieldValue
+          totalCount
+        }
+      }
+      softwareTagsGroup: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/(posts/blog/software)/" } }
+        limit: 2000
+      ) {
+        group(field: frontmatter___tags) {
+          fieldValue
+          totalCount
+        }
+      }
+      musicTagsGroup: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/(posts/blog/music)/" } }
+        limit: 2000
+      ) {
+        group(field: frontmatter___tags) {
           fieldValue
           totalCount
         }
@@ -64,6 +84,30 @@ exports.createPages = async ({ graphql, actions }) => {
       component: mainTemplate,
       context: {
         category: category.fieldValue,
+      },
+    })
+  })
+
+  const softwareTags = result.data.softwareTagsGroup.group
+
+  softwareTags.forEach(tag => {
+    createPage({
+      path: `/software/tag/${_.kebabCase(tag.fieldValue)}/`,
+      component: softwareTemplate,
+      context: {
+        tag: tag.fieldValue,
+      },
+    })
+  })
+
+  const musicTags = result.data.musicTagsGroup.group
+
+  musicTags.forEach(tag => {
+    createPage({
+      path: `/music/tag/${_.kebabCase(tag.fieldValue)}/`,
+      component: musicTemplate,
+      context: {
+        tag: tag.fieldValue,
       },
     })
   })

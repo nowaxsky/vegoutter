@@ -1,7 +1,7 @@
 ---
 title: "Code Highlight"
 category: "software"
-tags: ["Code"]
+tags: ["Code", "Test"]
 date: "2020-02-01 12:00:00 +09:00"
 desc: "Test Markdown Code Highlight"
 thumbnail: "../../images/software/code-block/thumbnail.jpg"

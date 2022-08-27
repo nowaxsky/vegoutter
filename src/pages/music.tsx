@@ -9,27 +9,27 @@ import useSiteMetadata from "Hooks/useSiteMetadata"
 import Layout from "Layouts/layout"
 import SEO from "Components/seo"
 import PostGrid from "Components/postGrid"
-import CategoryFilter from "Components/catetgoryFilter"
+import TagFilter from "Components/tagFilter"
 
 const Home = ({
   pageContext,
   data,
 }: PageProps<Query, MarkdownRemarkFrontmatter>) => {
   const [posts, setPosts] = useState<Post[]>([])
-  const currentCategory = pageContext.category
+  const currentTag = pageContext.tag
   const postData = data.allMarkdownRemark.edges
 
   useLayoutEffect(() => {
-    const filteredPostData = currentCategory
+    const filteredPostData = currentTag
       ? postData.filter(
-          ({ node }) => node?.frontmatter?.category === currentCategory
+          ({ node }) => node?.frontmatter?.tags.includes(currentTag)
         )
       : postData
 
     filteredPostData.forEach(({ node }) => {
       const { id } = node
       const { slug } = node?.fields!
-      const { title, desc, date, category, thumbnail, alt } = node?.frontmatter!
+      const { title, desc, date, category, tags, thumbnail, alt } = node?.frontmatter!
       const { childImageSharp } = thumbnail!
 
       setPosts(prevPost => [
@@ -41,22 +41,23 @@ const Home = ({
           desc,
           date,
           category,
+          tags,
           thumbnail: childImageSharp?.id,
           alt,
         },
       ])
     })
-  }, [currentCategory, postData])
+  }, [currentTag, postData])
 
   const site = useSiteMetadata()
-  const postTitle = currentCategory || site.postTitle
+  const postTitle = currentTag
 
   return (
     <Layout>
       <SEO title="Home" />
       <Main>
         <Content>
-          <CategoryFilter categoryList={data.allMarkdownRemark.group} categoryTitle="分類標籤" />
+          <TagFilter tagList={data.allMarkdownRemark.group} category="music" />
           <PostTitle>{postTitle}</PostTitle>
           <PostGrid posts={posts} />
         </Content>
@@ -96,7 +97,7 @@ const PostTitle = styled.h2`
   }
 `
 
-export const query1 = graphql`
+export const query = graphql`
   query {
     allMarkdownRemark(
       filter: { fileAbsolutePath: { regex: "/(posts/blog/music)/" } }
@@ -114,6 +115,7 @@ export const query1 = graphql`
           frontmatter {
             title
             category
+            tags
             date(formatString: "YYYY-MM-DD")
             desc
             thumbnail {

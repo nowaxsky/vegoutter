@@ -3218,6 +3218,7 @@ export type MarkdownRemarkFrontmatter = {
   __typename?: 'MarkdownRemarkFrontmatter';
   alt?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
+  tags?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Date']>;
   desc?: Maybe<Scalars['String']>;
   thumbnail?: Maybe<File>;

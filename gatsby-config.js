@@ -16,7 +16,7 @@ const siteMetadata = {
       name: "首頁",
     },
     {
-      link: `/software/`,
+      link: "/software/",
       name: "軟體技術",
     },
     {
@@ -208,7 +208,6 @@ const pwaPlugins = [
 ]
 
 module.exports = {
-  pathPrefix: "/vegoutter",
   siteMetadata,
   plugins: [
     ...corePlugins,

@@ -1,8 +1,9 @@
-import React from "react"
-import { graphql } from "gatsby"
+import React, { useRef } from "react"
+import { graphql, Link } from "gatsby"
 import styled from "styled-components"
+import kebabCase from "lodash/kebabCase"
 
-import type { Query } from "Types/GraphQL"
+import type { Query, MarkdownRemarkGroupConnection } from "Types/GraphQL"
 import Layout from "Layouts/layout"
 import SEO from "Components/seo"
 import Comment from "Components/comment"
@@ -10,17 +11,21 @@ import { rhythm } from "Styles/typography"
 import Category from "Styles/category"
 import DateTime from "Styles/dateTime"
 import Markdown from "Styles/markdown"
+import { DOMAINS } from "Constants/domain"
 
 interface BlogPostProps {
   data: Query
+  tagList: MarkdownRemarkGroupConnection[],
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
   const { markdownRemark } = data
   const { frontmatter, html } = markdownRemark!
-  const { title, desc, thumbnail, date, category } = frontmatter!
+  const { title, desc, thumbnail, date, category, tags } = frontmatter!
 
   const ogImagePath = thumbnail && thumbnail?.childImageSharp?.gatsbyImageData?.src
+  const tagRef = useRef<HTMLUListElement>(null)
+  const domainDescription = DOMAINS.find(domain => domain.name === category)?.description
 
   return (
     <Layout>
@@ -32,7 +37,22 @@ const BlogPost: React.FC<BlogPostProps> = ({ data }) => {
               <div>
                 <header>
                   <Info>
-                    <PostCategory>{category}</PostCategory>
+                    <PostCategory>{domainDescription}</PostCategory>
+                    <PostTag ref={tagRef} className="invisible-scrollbar">
+                      {tags
+                        .map(tag => {
+                          return (
+                            <li key={tag}>
+                              <TagButton
+                                to={`/${category}/tag/${kebabCase(tag!)}/`}
+                              >
+                                #{tag}
+                              </TagButton>
+                            </li>
+                          )
+                        })}
+                    </PostTag>
+                    <br />
                     <Time dateTime={date}>{date}</Time>
                   </Info>
                   <Title>{title}</Title>
@@ -133,6 +153,41 @@ const Title = styled.h1`
   }
 `
 
+const PostTag = styled.ul`
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semi-bold);
+  display: flex;
+  list-style: none;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  li + li {
+    margin-left: 6px;
+  }
+`
+
+const TagButton = styled(Link)`
+  cursor: pointer;
+  display: block;
+  background-color: var(--color-tag-button);
+  border-radius: var(--border-radius-base);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semi-bold);
+
+  :focus {
+    outline: none;
+  }
+
+  &:hover {
+  }
+
+  &:focus-visible {
+    color: var(--color-white);
+    background-color: var(--color-blue);
+  }
+`
+
 export const query = graphql`query ($slug: String!) {
   markdownRemark(fields: {slug: {eq: $slug}}) {
     html
@@ -146,6 +201,7 @@ export const query = graphql`query ($slug: String!) {
       }
       date(formatString: "YYYY-MM-DD")
       category
+      tags
     }
   }
 }

@@ -158,7 +158,6 @@ const PostTag = styled.ul`
   font-weight: var(--font-weight-semi-bold);
   display: flex;
   list-style: none;
-  overflow-x: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -180,6 +179,7 @@ const TagButton = styled(Link)`
   }
 
   &:hover {
+    color: var(--color-blue);
   }
 
   &:focus-visible {

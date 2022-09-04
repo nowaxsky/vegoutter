@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://nowaxsky.github.io/sitemap/sitemap-index.xml
-Host: https://nowaxsky.github.io
+Sitemap: https://www.mailu.blog/sitemap/sitemap-index.xml
+Host: https://www.mailu.blog

@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---src-pages-software-tsx",
+    "path": "/software/tag/business-process/",
+    "result": {"data":{"allMarkdownRemark":{"group":[{"fieldValue":"Business Process","totalCount":1}],"totalCount":1,"edges":[{"node":{"id":"e21a0368-11f9-5c14-8451-8051ce101d87","frontmatter":{"title":"IGOE 是什麼？","category":"software","tags":["Business Process"],"date":"2022-09-09","desc":"業務流程分析中的 Input、Guide、Output、Enabler。","thumbnail":{"childImageSharp":{"id":"e3d330d2-b1b8-5b2f-93cd-02eb05542692"},"base":"igoe-template.png"},"alt":"igoe"},"fields":{"slug":"/blog/software/igoe/"}}}]}},"pageContext":{"tag":"Business Process"}},
+    "staticQueryHashes": ["1840460387","48878111"]}

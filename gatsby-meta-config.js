@@ -18,15 +18,15 @@
 /** @type {MetaConfig} */
 const metaConfig = {
   title: "團長麥魯魯",
-  description: `Chuck's Blog`,
-  author: "Chuck",
-  siteUrl: "https://nowaxsky.github.io/vegoutter/",
+  description: "團長麥魯魯的部落格",
+  author: "Mailu",
+  siteUrl: "https://www.mailu.blog/",
   lang: "zh-Hant",
   utterances: "nowaxsky/vegoutter-comment",
   links: {
-    github: "https://github.com/nowaxsky/vegoutter",
-    linkedin: "https://www.linkedin.com/in/nowaxsky/",
-    medium: "https://medium.com/@cpm.chuck",
+    github: "https://github.com/nowaxsky/",
+    linkedin: "https://www.linkedin.com/in/chuckmai/",
+    medium: "https://medium.com/@chuckmai",
   },
   favicon: "src/images/icon.png",
 }

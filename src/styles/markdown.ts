@@ -13,7 +13,13 @@ const Markdown = styled.article<{ rhythm: typeof typography["rhythm"] }>`
 
   td,
   th {
+    padding: 12px;
+    text-align: center;
     border-bottom: 1px solid var(--color-gray-3);
+  }
+
+  thead {
+    font-weight: bold
   }
 
   strong {
@@ -85,6 +91,10 @@ const Markdown = styled.article<{ rhythm: typeof typography["rhythm"] }>`
     margin-left: ${({ rhythm }) => rhythm(1.25)};
   }
 
+  ul {
+    list-style: inherit;
+  }
+
   li > ul,
   li > ol {
     margin-top: 0;
@@ -101,6 +111,7 @@ const Markdown = styled.article<{ rhythm: typeof typography["rhythm"] }>`
   }
 
   li {
+    line-height: 1.5;
     margin-bottom: ${({ rhythm }) => rhythm(0.3)};
   }
 
